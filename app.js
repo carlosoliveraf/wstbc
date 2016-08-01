@@ -4,7 +4,6 @@ var app = require('./app_config.js');
 var userController = require('./controller/userController.js');
 var characterController = require('./controller/characterCtrl.js');
 
-
 var validator = require('validator');
 
 var itens = [
@@ -115,6 +114,36 @@ app.post('/characters', function (req, res) {
 	//res.end("post")
 	//itens.push(item);
 	//res.end();
+});
+
+app.delete('/characters/:id', function (req, res) {
+
+	var id = req.param('id');
+		
+		characterController.delete(id, function(resp){
+			res.json(resp);
+
+		});
+
+
+	//res.status(500).end();
+	// res.json(itens);
+});
+
+
+app.put('/characters/:id', function (req, res) {
+		
+	var id = req.param('id');
+	var name = validator.trim(validator.escape(req.param('name')));
+	var level = validator.trim(validator.escape(req.param('level')));
+	var stamina = validator.trim(validator.escape(req.param('stamina')));
+	var vocation = validator.trim(validator.escape(req.param('vocation')));
+
+	characterController.update(id, name, level, stamina, vocation, function(resp){
+		res.json(resp);
+
+	});
+
 });
 
 

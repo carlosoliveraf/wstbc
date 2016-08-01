@@ -51,56 +51,64 @@ exports.save = function(name, level, stamina, vocation, callback){
 };
 
 
-// exports.update = function(id, fullname, email, password, callback) {
+exports.update = function(id, name, level, stamina, vocation, callback) {
 
-// 	db.Character.findById(id, function(error, user) {
+	db.Character.findById(id, function(error, character) {
 
-// 		if(fullname) {
+		if(name) {
 
-// 			user.fullname = fullname;
-// 		}
+			character.name = name;
+		}
 
-// 		if(email) {
+		if(level) {
 
-// 			user.email = email;
-// 		}
+			character.level = level;
+		}
 
-// 		if(password) {
+		if(stamina) {
 
-// 			user.password = password;
-// 		}
+			character.stamina = stamina;
+		}
 
-// 		user.save(function(error, user) {
+		if(vocation) {
 
-// 			if(error) {
+			character.vocation = vocation;
+		}
 
-// 				callback({error: 'Não foi possivel salvar o usuario'});
-// 			} else {
+		character.save(function(error, character) {
 
-// 				callback(user);
-// 			}
-// 		});
-// 	});
-// };
+			if(error) {
+
+				callback({error: 'Não foi possivel salvar o usuario'});
+			} else {
+
+				callback(character);
+			}
+		});
+	});
+};
 
 
-// exports.delete = function(id, callback) {
+exports.delete = function(id, callback) {
 
-// 	db.Character.findById(id, function(error, user) {
+	db.Character.findById(id, function(error, character) {
 
-// 		if(error) {
+		if(error) {
+			console.log(error);
+			callback({error: 'Não foi possivel retornar o usuario'});
+		} else {
 
-// 			callback({error: 'Não foi possivel retornar o usuario'});
-// 		} else {
+			character.remove(function(error) {
 
-// 			user.remove(function(error) {
+				if(!error) {
 
-// 				if(!error) {
-
-// 					callback({response: 'Usuário excluido com sucesso'});
-// 				}
-// 			});
-// 		}
-// 	});
+					callback({response: 'Usuário excluido com sucesso'});
+				}
+			});
+		}
+	});
 	
-// };
+};
+
+
+
