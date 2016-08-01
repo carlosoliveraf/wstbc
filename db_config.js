@@ -1,4 +1,6 @@
-var db_string = 'mongodb://127.0.0.1/appteste';
+// var db_string = 'mongodb://127.0.0.1/appteste';
+
+var db_string = 'mongodb://root:mongouser@ds021895.mlab.com:21895/tbamonitor';
 
 var mongoose = require('mongoose').connect(db_string);
 
